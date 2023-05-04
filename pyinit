@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# ------------------------------------------------------------
+# Script     :
+# Descrição  :
+# Versão     : 1.0
+# Autor      : Marconi S. de Jesus <marconi.developer@outlook.com.br>
+# Licença    : GNU/GPL v3.0
+# Data       : 04/05/2023
+# ------------------------------------------------------------
+# Uso:
+# ------------------------------------------------------------
+
+# Load functions
+source ~/bin/pyinit-script/functions.mod.sh
+
+# Creating and activating the enviroment
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Starting new git repository
+git init 
+
+# If $(pyinit django) auto install django and stubs then
+# include a .gitignore for django projects
+if [[ $1 = 'django' ]]; then 
+  set_django_environment
+  make_dockerfile
+  make_dockercompose
+else
+  echo 'venv/' > .gitignore
+fi
+
+
+# Setting pyright
+echo '{"venvPath":".", "venv":".venv"}' > pyrightconfig.json
+
